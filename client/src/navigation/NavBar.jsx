@@ -1,18 +1,28 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./navBar-custom.css";
 
 const NavBar = () => {
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate("/login");
-  };
+  const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
 
   return (
     <div id="navcontainer" className="navBar-custom">
-      <p>
-        <a onClick={handleClick}>Login or Sign Up</a>
-      </p>
+      {!isAuthenticated ? (
+        <div>
+          <p>
+            <a onClick={() => loginWithRedirect()}>Login or Sign Up</a>
+          </p>
+        </div>
+      ) : (
+        <div>
+          <p>
+            <a onClick={() => logout({ returnTo: wondow.locaiton.origin })}>
+              Log Out
+            </a>
+          </p>
+          <p>Welcome, {user.name}</p>
+        </div>
+      )}
     </div>
   );
 };
