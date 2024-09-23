@@ -1,0 +1,11 @@
+#homecontainer {
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center; 
+}
+
+#homecontainer p {
+  padding-left: 20px; 
+  padding-right: 20px; 
+}

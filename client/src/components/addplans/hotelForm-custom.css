@@ -1,0 +1,8 @@
+#hotelForm {
+  display: flex; 
+  flex-direction: column;
+}
+
+#info {
+  padding: 20px; 
+}
