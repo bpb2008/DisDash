@@ -3,9 +3,9 @@ import "./footer-custom.css";
 
 const Footer: React.FC = () => {
   return (
-    <div id="footercontainer" className="footer-custom">
+    <footer id="footercontainer" className="footer-custom">
       <p>Woohoo here's a footer too!</p>
-    </div>
+    </footer>
   );
 };
 
