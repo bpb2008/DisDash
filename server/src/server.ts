@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import pg from "pg";
-import { expressjwt } from "express-jwt";
+import jwt from "express-jwt";
 import JwksRsa from "jwks-rsa";
 
 dotenv.config();
@@ -11,6 +11,10 @@ const app = express();
 app.use(express.json());
 const port = process.env.PORT;
 const { Pool } = pg;
+
+app.listen(port, () => {
+  console.log(`Hey girl heyyyy! Server is running on port ${port}`);
+});
 
 app.use(
   cors({
@@ -23,19 +27,19 @@ const pool = new Pool({
   connectionString: process.env.LOCALHOST_DATABASE_URL,
 });
 
-const checkJwt = expressjwt({
+const checkJwt = jwt({
   secret: JwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
     jwksRequestsPerMinute: 5,
-    jwksUri: `https://process.env.VITE_AUTH0_DOMAIN/.well-known/jwks.json`,
+    jwksUri: `https://${process.env.VITE_AUTH0_DOMAIN}/.well-known/jwks.json`,
   }),
-  audience: "",
-  issuer: ``,
+  audience: process.env.VITE_AUTH0_AUDIENCE,
+  issuer: `https://${process.env.VITE_AUTH0_DOMAIN}/`,
   algorithms: ["RS256"],
 });
 
-app.use(checkJwt);
+app.use("/api/users", checkJwt);
 
 app.post("/api/users", async (req, res) => {
   const { auth0_id, email, name } = req.body;

@@ -13,26 +13,26 @@ const Dashboard: React.FC = () => {
   const { user, isAuthenticated } = useAuth0();
   const [travelPlans, setTravelPlans] = useState([]);
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     fetch("/api/users", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         auth0_id: user.sub,
-  //         email: user.email,
-  //         name: user.name,
-  //       }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((userData) => {
-  //         return fetch(`/api/travel-plans/${userData.id}`);
-  //       })
-  //       .then((res) => res.json())
-  //       .then((data) => setTravelPlans(data))
-  //       .catch((error) => console.error(error));
-  //   }
-  // }, [isAuthenticated, user]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetch("/api/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          auth0_id: user?.sub,
+          email: user?.email,
+          name: user?.name,
+        }),
+      })
+        .then((res) => res.json())
+        .then((userData) => {
+          return fetch(`/api/travel-plans/${userData.id}`);
+        })
+        .then((res) => res.json())
+        .then((data) => setTravelPlans(data))
+        .catch((error) => console.error(error));
+    }
+  }, [isAuthenticated, user]);
 
   if (!isAuthenticated) {
     return <p>Please log in to view your travel plans.</p>;
@@ -45,7 +45,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="dashboard-custom">
-      <h1>Welcome, {user.name}!</h1>
+      <h1>Welcome, {user?.name}!</h1>
       <button onClick={handleClick}>Add New Plans</button>
       {travelPlans.length > 0 ? (
         <div id="dashboard-grid">
