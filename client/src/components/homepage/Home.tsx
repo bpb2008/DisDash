@@ -1,14 +1,9 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "./home-custom.css";
 import HowItWorks from "./HowItWorks";
+import LoginButton from "../LoginButton";
 
 const Home: React.FC = () => {
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate("/login");
-  };
-
   return (
     <div id="homecontainer" className="home-custom">
       <h2>Welcome to DisDash!</h2>
@@ -18,7 +13,7 @@ const Home: React.FC = () => {
         tickets, flight information, rental car reservation, dining, and more.
         Share plans with your travel party to make group trips less stressful.
       </p>
-      <button onClick={handleClick}>Get Started</button>
+      <LoginButton />
       <HowItWorks />
     </div>
   );
